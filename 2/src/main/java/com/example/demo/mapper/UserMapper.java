@@ -1,6 +1,6 @@
 package com.example.demo.mapper;
-
 import com.example.demo.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 处理用户数据的持久层接口
@@ -14,6 +14,8 @@ public interface UserMapper {
    */
   Integer insert(User user);
   boolean addUser(User user);
+  Integer updatePassword( String phone,  String password);
+  User findByUserPassword(String password);
   
   /**
    * 根据用户名查询用户数据

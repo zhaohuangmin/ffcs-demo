@@ -5,17 +5,11 @@
 <mapper namespace="com.example.demo.mapper.UserMapper">
 
     <resultMap type="com.example.demo.pojo.User" id="UserEntityMap">
-        <id column="uid" property="uid"/>
-        <result column="is_delete" property="isDelete"/>
-        <result column="created_user" property="createdUser"/>
-        <result column="created_time" property="createdTime"/>
-        <result column="modified_user" property="modifiedUser"/>
-        <result column="modified_time" property="modifiedTime"/>
     </resultMap>
 
     <!-- 插入用户数据 -->
     <!-- Integer insert(User user); -->
-    <insert id="addUser" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="addUser">
         INSERT INTO demo.d_user (
             username, password, salt, gender,
             phone, email, avatar, is_delete,
@@ -34,6 +28,12 @@
     </select>
     <select id="findByUserphone" resultMap="UserEntityMap">
         SELECT * FROM demo.d_user WHERE phone=#{phone}
+    </select>
+    <update id="updatePassword" parameterType="com.example.demo.pojo.User">
+        update demo.d_user set password=#{password} where phone=#{phone}
+    </update>
+    <select id="findByUserPassword" resultMap="UserEntityMap">
+        select * from demo.d_user where password=#{password}
     </select>
 
 

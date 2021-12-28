@@ -10,4 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface Userservice {
     RespBean login(User user, HttpServletResponse response, HttpServletRequest request);
     RespBean register(User user,HttpServletResponse response, HttpServletRequest request);
+    RespBean updatepassword(User user,HttpServletResponse response, HttpServletRequest request);
+
 }

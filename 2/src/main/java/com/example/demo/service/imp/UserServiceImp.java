@@ -27,7 +27,13 @@ public class UserServiceImp implements Userservice {
     private UserMapper userMapper;
 
 
-
+    /**
+     * 登入功能
+     * @param User
+     * @param response
+     * @param request
+     * @return
+     */
     public RespBean login(User User, HttpServletResponse response, HttpServletRequest request) {
         String mobile = User.getPhone();
         String password = User.getPassword();
@@ -55,13 +61,20 @@ public class UserServiceImp implements Userservice {
 
     }
 
+    /**
+     * 注册功能
+     * @param user
+     * @param response
+     * @param request
+     * @return
+     */
     @Override
-    public RespBean register(User User,HttpServletResponse response, HttpServletRequest request) {
-        String mobile = User.getPhone();
-        String password = User.getPassword();
-        String name = User.getUsername();
-        String email = User.getEmail();
-        String confirmpassword = User.getConfirmpassword();
+    public RespBean register(User user,HttpServletResponse response, HttpServletRequest request) {
+        String mobile = user.getPhone();
+        String password = user.getPassword();
+        String name = user.getUsername();
+        String email = user.getEmail();
+        String confirmpassword = user.getConfirmpassword();
         User username = userMapper.findByUsername(name);
         String MD5password = MD5utils.InputPassToFromPass(password);
         User phone = userMapper.findByUserphone(mobile);
@@ -87,5 +100,28 @@ public class UserServiceImp implements Userservice {
 
         return RespBean.success();
 
+    }
+
+    @Override
+    public RespBean updatepassword(User user, HttpServletResponse response, HttpServletRequest request) {
+        String newpassword = user.getPassword();
+        String mobile = user.getPhone();
+        String confirmpassword = user.getConfirmpassword();
+        String MD5password = MD5utils.InputPassToFromPass(newpassword);
+        User password = userMapper.findByUserPassword(newpassword);
+        User phone = userMapper.findByUserphone(mobile);
+        if(phone==null)
+        {
+            throw new GlobalExceptions(RespBeanEnum.PHONE_ERROR);
+        }
+        if(password!=null){
+            throw new GlobalExceptions(RespBeanEnum.UPDATEPASSWORD_ERROR);
+        }
+        if(!newpassword.equals(confirmpassword)){
+            throw new GlobalExceptions(RespBeanEnum.PASSWORD_ERROR);
+        }
+        userMapper.updatePassword(MD5password, mobile);
+
+        return RespBean.success();
     }
 }

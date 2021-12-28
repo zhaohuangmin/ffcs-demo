@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.GoodsMapper">
+    <insert id="addGoods">
+        insert into demo.goods(goodsname, price,id) VALUES (#{goodsname},#{price},#{id})
+    </insert>
+    <select id="findAll" resultType="com.example.demo.pojo.Goods">
+        select * from demo.goods
+    </select>
+    <update id="updataGoods">
+        update demo.goods
+                set goodsname=#{goodsname} ,
+                    price=#{price},
+                    num=#{num}
+                where id=#{id}
+    </update>
+
+</mapper>
